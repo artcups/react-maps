@@ -10,7 +10,8 @@ export default class Map extends Component {
   static propTypes = {
     center: PropTypes.array,
     zoom: PropTypes.number,
-    greatPlaceCoords: PropTypes.any
+    greatPlaceCoords: PropTypes.any,
+    onChildClick: PropTypes.func,
   };
 
   static defaultProps = {
@@ -22,8 +23,17 @@ export default class Map extends Component {
   constructor(props) {
     super(props);
   }
+  _onChildClick = (key, childProps) => {
+   const markerId = childProps.marker.get('id');
+   const index = this.props.markers.findIndex(m => m.get('id') === markerId);
+   if (this.props.onChildClick) {
+     this.props.onChildClick(index);
+   }
+ }
 
+  // _onClick = ({x, y, lat, lng, event}) => console.log(x, y, lat, lng, event)
   render() {
+
     const Cords = [
       {title: "Title", lat: 59.34541678, lng: 18.1822184},
       {title: "Title", lat: 59.36392828, lng: 18.05248107},
@@ -35,7 +45,7 @@ export default class Map extends Component {
       {title: "Title", lat: 59.28866218, lng: 18.00586609},
       {title: "Title", lat: 59.24203335, lng: 18.03614352},
       {title: "Title", lat: 59.2657605, lng: 18.09346632}
-    ].map((cord, i) => <MapIcon key={i} lat={cord.lat} lng={cord.lng} />);
+    ].map((cord, i) => <MapIcon key={i} lat={cord.lat} lng={cord.lng} onClick={this._onClick} />);
 
     const key = "AIzaSyDcZm8e0sMRiWBEiCKXoh_5sZJhb92-Cvc";
     return (

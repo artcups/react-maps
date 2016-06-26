@@ -29,9 +29,7 @@ export default class MapIcon extends Component {
 
     };
     return (
-       <img src={mindLogo} style={greatPlaceStyle}>
-          
-       </img>
+       <img src={mindLogo} style={greatPlaceStyle} />
     );
   }
 }
